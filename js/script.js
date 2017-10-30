@@ -43,4 +43,34 @@
 			this.draw()
 		}
 	}
+
+	/////////////////////////////////////////////////
+	// FUNCTIONS
+	/////////////////////////////////////////////////
+
+	const getRandomInt = (min, max) => {
+		return Math.floor(Math.random() * (max - min + 1) + min)
+	}
+
+	const getRandomSign = () => Math.random() < 0.5 ? 1 : -1
+
+	const init = () => {
+		canvas.width = innerWidth
+		canvas.height = innerHeight
+		for (let i = 0; i < 100; ++i) {
+			const r = 2
+			const x = getRandomInt(0 + r, innerWidth - r)
+			const y = getRandomInt(0 + r, innerHeight - r)
+			const vx = getRandomInt(1, 4) * getRandomSign()
+			const vy = getRandomInt(1, 4) * getRandomSign()
+			const color = 'white'
+			particles.push(new Particle(x, y, vx, vy, r, color))
+		}
+	}
+
+	const animate = () => {
+		requestAnimationFrame(animate)
+		c.clearRect(0, 0, innerWidth, innerHeight)
+		particles.forEach(particle => particle.update())
+	}
 })(document.getElementById('canvas'))
