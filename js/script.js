@@ -48,21 +48,35 @@
 	// FUNCTIONS
 	/////////////////////////////////////////////////
 
+	const drawLine = (x1, y1, x2, y2) => {
+		c.beginPath()
+		c.moveTo(x1, y1)
+		c.lineWidth = 1
+		c.lineTo(x2, y2)
+		c.strokeStyle = 'rgba(255, 255, 255, 0.1)'
+		c.stroke()
+	}
+
 	const getRandomInt = (min, max) => {
 		return Math.floor(Math.random() * (max - min + 1) + min)
 	}
 
 	const getRandomSign = () => Math.random() < 0.5 ? 1 : -1
 
+	const getDistance = (x1, y1, x2, y2) => {
+		return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2))
+	}
+
 	const init = () => {
 		canvas.width = innerWidth
 		canvas.height = innerHeight
-		for (let i = 0; i < 100; ++i) {
-			const r = 2
+		particles.length = 0
+		for (let i = 0; i < 250; ++i) {
+			const r = 1
 			const x = getRandomInt(0 + r, innerWidth - r)
 			const y = getRandomInt(0 + r, innerHeight - r)
-			const vx = getRandomInt(1, 4) * getRandomSign()
-			const vy = getRandomInt(1, 4) * getRandomSign()
+			const vx = getRandomSign()
+			const vy = getRandomSign()
 			const color = 'white'
 			particles.push(new Particle(x, y, vx, vy, r, color))
 		}
@@ -71,8 +85,24 @@
 	const animate = () => {
 		requestAnimationFrame(animate)
 		c.clearRect(0, 0, innerWidth, innerHeight)
-		particles.forEach(particle => particle.update())
+		particles.forEach(p1 => {
+			p1.update()
+
+			// loop through other particles, and if they are close enough to 
+			// p1 particle, draw a line
+			particles.forEach(p2 => {
+				if (p1 !== p2 && getDistance(p1.x, p1.y, p2.x, p2.y) < 100) {
+					drawLine(p1.x, p1.y, p2.x, p2.y)
+				}
+			})
+		})
 	}
+
+	/////////////////////////////////////////////////
+	// EVENT LISTENERS
+	/////////////////////////////////////////////////
+
+	window.addEventListener('resize', init)
 
 	/////////////////////////////////////////////////
 	// MAIN VARIABLES
