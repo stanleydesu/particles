@@ -80,4 +80,11 @@
 
 	const c = canvas.getContext('2d')
 	const particles = []
+
+	/////////////////////////////////////////////////
+	// FUNCTION EXECUTION
+	/////////////////////////////////////////////////
+
+	init()
+	animate()
 })(document.getElementById('canvas'))
