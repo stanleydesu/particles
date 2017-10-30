@@ -73,4 +73,11 @@
 		c.clearRect(0, 0, innerWidth, innerHeight)
 		particles.forEach(particle => particle.update())
 	}
+
+	/////////////////////////////////////////////////
+	// MAIN VARIABLES
+	/////////////////////////////////////////////////
+
+	const c = canvas.getContext('2d')
+	const particles = []
 })(document.getElementById('canvas'))
