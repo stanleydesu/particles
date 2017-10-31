@@ -49,11 +49,12 @@
 	/////////////////////////////////////////////////
 
 	const drawLine = (x1, y1, x2, y2) => {
+		const d = getDistance(x1, y1, x2, y2)
 		c.beginPath()
 		c.moveTo(x1, y1)
 		c.lineWidth = 1
 		c.lineTo(x2, y2)
-		c.strokeStyle = 'rgba(255, 255, 255, 0.1)'
+		c.strokeStyle = `rgba(255, 255, 255, ${(100 - d) / 100})`
 		c.stroke()
 	}
 
@@ -71,12 +72,12 @@
 		canvas.width = innerWidth
 		canvas.height = innerHeight
 		particles.length = 0
-		for (let i = 0; i < 250; ++i) {
-			const r = 1
+		for (let i = 0; i < 150; ++i) {
+			const r = 0
 			const x = getRandomInt(0 + r, innerWidth - r)
 			const y = getRandomInt(0 + r, innerHeight - r)
-			const vx = getRandomSign()
-			const vy = getRandomSign()
+			const vx = getRandomInt(-1, 1)
+			const vy = getRandomInt(-1, 1)
 			const color = 'white'
 			particles.push(new Particle(x, y, vx, vy, r, color))
 		}
